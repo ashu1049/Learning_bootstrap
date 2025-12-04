@@ -83,15 +83,16 @@
                 <div class="row">
                     
                     <div class="col-md-6 border border-primary p-3">
-                        <form>
+                        <form id="contactform" onsubmit="return validate()">
                             <div class="row">
                                 <h1>Contact Form</h1>
                                 <div class="col-md-6 ">
 
                                     <div class="mb-3">
                                         <label for="exampleFormControlInput1" class="form-label">Enter Name</label>
-                                        <input type="text" class="form-control" id="exampleFormControlInput1"
+                                        <input type="text" class="form-control" id="name" name="name"
                                             placeholder="Enter Name">
+                                            <span class="text-danger" id="nameerror"></span>
                                     </div>
 
 
@@ -99,8 +100,9 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="exampleFormControlInput1" class="form-label">Enter Email</label>
-                                        <input type="email" class="form-control" id="exampleFormControlInput1"
+                                        <input type="email" class="form-control" id="email" name="email"
                                             placeholder="Enter Email">
+                                            <span class="text-danger" id="pwd_error"></span>
                                     </div>
                                 </div>
 
@@ -108,8 +110,9 @@
 
                                     <div class="mb-3">
                                         <label for="exampleFormControlInput1" class="form-label">Mobile no.</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1"
+                                        <input type="number" class="form-control" id="number" name="number"
                                             placeholder="Enter MobileNo">
+                                            <span class="text-danger" id="numbererror"></span>
                                     </div>
 
 
@@ -117,8 +120,9 @@
                                 <div class="col-md-6">
                                     <div class="mb-3"> 
                                         <label for="exampleFormControlInput1" class="form-label">Enter phoneNo</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1"
+                                        <input type="number" class="form-control" id="number" name="number"
                                             placeholder="Enter phoneNo">
+                                            <span class="text-danger" id="numbererror"></span>
                                     </div>
                                 </div>
 
@@ -158,8 +162,9 @@
                                 <div class="col-md-4 mb-3">
                                     <div class="mb-3">
                                         <label for="exampleFormControlInput1" class="form-label">Enter zip code</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1"
+                                        <input type="number" class="form-control" id="number" name="number"
                                             placeholder="Enter zip code">
+                                            <span class="text-danger" id="numbererror"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -175,14 +180,14 @@
                                 <div class="col-md-4 ">
                                     <div class="mb-3">
                                         <label for="exampleFormControlInput1" class="form-label">Enter DOB</label>
-                                        <input type="date" class="form-control" id="exampleFormControlInput1"
+                                        <input type="date" class="form-control" id="number" name="number"
                                             placeholder="Enter DOB">
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 ">
                                     <div class="mb-3" style="text-align: center;">
-                                        <button type="button" class="btn btn-primary" >
+                                        <button type="submit" class="btn btn-primary" >
                                             Submit
                                         </button>
                                     </div>

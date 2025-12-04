@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Normal Form - Bootstrap Validation</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      /* small style tweak so error text has consistent spacing */
+      .error-msg { font-size: 0.9rem; min-height: 1.2rem; }
+    </style>
+  </head>
+  <body class="bg-light">
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-md-7">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h3 class="card-title mb-4">Contact / Signup Form</h3>
+
+              <!-- Form starts -->
+              <form id="normalForm" onsubmit="return validateForm(event)">
+
+                <!-- Name -->
+                <div class="mb-3">
+                  <label for="name" class="form-label">Name</label>
+                  <input type="text" class="form-control" id="name" placeholder="Enter your full name">
+                  <div id="nameError" class="text-danger error-msg"></div>
+                </div>
+
+                <!-- Email -->
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                  <div id="emailError" class="text-danger error-msg"></div>
+                </div>
+
+                <!-- Mobile -->
+                <div class="mb-3">
+                  <label for="mobile" class="form-label">Mobile No</label>
+                  <input type="tel" class="form-control" id="mobile" placeholder="10 digit mobile number">
+                  <div id="mobileError" class="text-danger error-msg"></div>
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                  <label for="password" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="password" placeholder="Enter password">
+                  <div id="passwordError" class="text-danger error-msg"></div>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="mb-3">
+                  <label for="confirmPassword" class="form-label">Confirm Password</label>
+                  <input type="password" class="form-control" id="confirmPassword" placeholder="Re-enter password">
+                  <div id="confirmPasswordError" class="text-danger error-msg"></div>
+                </div>
+
+                <!-- Message / Feedback -->
+                <div class="mb-3">
+                  <label for="message" class="form-label">Message (Feedback)</label>
+                  <textarea class="form-control" id="message" rows="4" placeholder="Write your message..."></textarea>
+                  <div id="messageError" class="text-danger error-msg"></div>
+                </div>
+
+                <!-- Agree checkbox -->
+                <div class="mb-3 form-check">
+                  <input type="checkbox" class="form-check-input" id="agree">
+                  <label class="form-check-label" for="agree">I agree to the terms and conditions</label>
+                  <div id="agreeError" class="text-danger error-msg"></div>
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="reset" class="btn btn-secondary ms-2" onclick="clearErrors()">Reset</button>
+
+              </form>
+              <!-- Form ends -->
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // validateForm - called on submit. Uses getElementById for every field and error container.
+      function validateForm(event) {
+        event.preventDefault(); // stop normal submission for validation
+
+        // get elements by id
+        const nameEl = document.getElementById('name');
+        const emailEl = document.getElementById('email');
+        const mobileEl = document.getElementById('mobile');
+        const passwordEl = document.getElementById('password');
+        const confirmPasswordEl = document.getElementById('confirmPassword');
+        const messageEl = document.getElementById('message');
+        const agreeEl = document.getElementById('agree');
+
+        // get error containers
+        const nameError = document.getElementById('nameError');
+        const emailError = document.getElementById('emailError');
+        const mobileError = document.getElementById('mobileError');
+        const passwordError = document.getElementById('passwordError');
+        const confirmPasswordError = document.getElementById('confirmPasswordError');
+        const messageError = document.getElementById('messageError');
+        const agreeError = document.getElementById('agreeError');
+
+        // clear previous errors
+        nameError.innerText = '';
+        emailError.innerText = '';
+        mobileError.innerText = '';
+        passwordError.innerText = '';
+        confirmPasswordError.innerText = '';
+        messageError.innerText = '';
+        agreeError.innerText = '';
+
+        let valid = true;
+
+        // Name validation: required and at least 2 chars
+        const name = nameEl.value.trim();
+        if (name === '') {
+          nameError.innerText = 'Name is required.';
+          valid = false;
+        } else if (name.length < 2) {
+          nameError.innerText = 'Enter at least 2 characters.';
+          valid = false;
+        }
+
+        // Email validation: basic regex
+        const email = emailEl.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (email === '') {
+          emailError.innerText = 'Email is required.';
+          valid = false;
+        } else if (!emailRegex.test(email)) {
+          emailError.innerText = 'Enter a valid email address.';
+          valid = false;
+        }
+
+        // Mobile validation: digits only and 10 digits (adjust if you want different rule)
+        const mobile = mobileEl.value.trim();
+        const mobileDigits = mobile.replace(/\D/g, ''); // remove non-digits
+        if (mobile === '') {
+          mobileError.innerText = 'Mobile number is required.';
+          valid = false;
+        } else if (!/^\d{10}$/.test(mobileDigits)) {
+          mobileError.innerText = 'Enter a valid 10-digit mobile number.';
+          valid = false;
+        }
+
+        // Password validation: required, min 6 chars
+        const password = passwordEl.value;
+        if (password === '') {
+          passwordError.innerText = 'Password is required.';
+          valid = false;
+        } else if (password.length < 6) {
+          passwordError.innerText = 'Password must be at least 6 characters.';
+          valid = false;
+        }
+
+        // Confirm password validation: must match
+        const confirmPassword = confirmPasswordEl.value;
+        if (confirmPassword === '') {
+          confirmPasswordError.innerText = 'Please confirm your password.';
+          valid = false;
+        } else if (confirmPassword !== password) {
+          confirmPasswordError.innerText = 'Passwords do not match.';
+          valid = false;
+        }
+
+        // Message validation: optional but limit length
+        const message = messageEl.value.trim();
+        if (message.length > 500) {
+          messageError.innerText = 'Message cannot exceed 500 characters.';
+          valid = false;
+        }
+
+        // Agree checkbox: must be checked
+        if (!agreeEl.checked) {
+          agreeError.innerText = 'You must agree to the terms.';
+          valid = false;
+        }
+
+        // If all valid, you can submit the form or show success
+        if (valid) {
+          // For demo we'll show an alert and reset the form. In real use, submit to server here.
+          alert('Form submitted successfully!');
+          document.getElementById('normalForm').reset();
+          return true; // allow submission if you want (but we already prevented default)
+        }
+
+        return false; // prevent submission because of validation errors
+      }
+
+      // clearErrors - clears error messages when reset button used
+      function clearErrors() {
+        const ids = ['nameError','emailError','mobileError','passwordError','confirmPasswordError','messageError','agreeError'];
+        ids.forEach(id => document.getElementById(id).innerText = '');
+      }
+    </script>
+  </body>
+</html>
